@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helping World Wide — Free Resources For Everyone</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;0,900;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --green: #1a6b3c; --green-light: #2d9e5f; --green-pale: #e8f5ee;
+    --gold: #e8a020; --dark: #0f1f17; --text: #2a3d30;
+    --muted: #6b8070; --white: #fafcfb; --card-bg: #ffffff;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--text); overflow-x: hidden; }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 40px; background: rgba(250,252,251,0.92);
+    backdrop-filter: blur(12px); border-bottom: 1px solid #d4e8db;
+  }
+  .nav-logo { font-family: 'Fraunces', serif; font-size: 1.3rem; font-weight: 900; color: var(--green); }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--text); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--green); }
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 100px 24px 60px;
+    background: linear-gradient(160deg, #0f1f17 0%, #1a6b3c 60%, #2d9e5f 100%);
+    position: relative; overflow: hidden; text-align: center;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-globe { font-size: 5rem; margin-bottom: 24px; animation: float 3s ease-in-out infinite; }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+  .hero h1 { font-family: 'Fraunces', serif; font-size: clamp(2.8rem, 7vw, 5rem); font-weight: 900; color: #fff; line-height: 1.1; letter-spacing: -2px; margin-bottom: 20px; }
+  .hero h1 span { color: var(--gold); }
+  .hero p { font-size: clamp(1rem, 2.5vw, 1.25rem); color: rgba(255,255,255,0.8); max-width: 600px; line-height: 1.7; margin-bottom: 40px; }
+  .hero-search { display: flex; background: white; border-radius: 50px; padding: 6px 6px 6px 24px; box-shadow: 0 8px 40px rgba(0,0,0,0.3); width: 100%; max-width: 560px; margin-bottom: 24px; }
+  .hero-search input { flex: 1; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 1rem; color: var(--text); background: transparent; }
+  .hero-search input::placeholder { color: #aaa; }
+  .hero-search button { background: var(--green); color: white; border: none; border-radius: 40px; padding: 12px 28px; font-size: 0.95rem; font-weight: 500; cursor: pointer; white-space: nowrap; }
+  .hero-search button:hover { background: var(--green-light); }
+  .hero-tags { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .hero-tag { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 6px 16px; font-size: 0.82rem; cursor: pointer; transition: all 0.2s; }
+  .hero-tag:hover { background: rgba(255,255,255,0.22); }
+  .stats { background: var(--dark); display: flex; justify-content: center; flex-wrap: wrap; }
+  .stat-item { flex: 1; min-width: 160px; padding: 32px 24px; text-align: center; border-right: 1px solid rgba(255,255,255,0.07); }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-family: 'Fraunces', serif; font-size: 2.4rem; font-weight: 900; color: var(--gold); }
+  .stat-label { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 4px; }
+  section { padding: 80px 24px; }
+  .section-title { font-family: 'Fraunces', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; color: var(--dark); letter-spacing: -1px; margin-bottom: 12px; }
+  .section-title span { color: var(--green); }
+  .section-sub { color: var(--muted); font-size: 1rem; margin-bottom: 48px; max-width: 500px; }
+  .section-header { text-align: center; }
+  .section-header .section-sub { margin-left: auto; margin-right: auto; }
+  #countries { background: var(--white); }
+  .region-tabs { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 40px; }
+  .region-tab { padding: 10px 22px; border-radius: 30px; border: 2px solid #d4e8db; background: white; color: var(--text); font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+  .region-tab.active, .region-tab:hover { background: var(--green); color: white; border-color: var(--green); }
+  .countries-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
+  .country-card { background: var(--card-bg); border: 1px solid #e0ede5; border-radius: 16px; padding: 24px; cursor: pointer; transition: all 0.25s; position: relative; overflow: hidden; }
+  .country-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--green-light); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+  .country-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(26,107,60,0.12); border-color: var(--green-light); }
+  .country-card:hover::before { transform: scaleX(1); }
+  .country-flag { font-size: 2.2rem; margin-bottom: 12px; }
+  .country-name { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+  .country-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.5; margin-bottom: 14px; }
+  .country-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .ctag { background: var(--green-pale); color: var(--green); font-size: 0.75rem; padding: 3px 10px; border-radius: 10px; font-weight: 500; }
+  #categories { background: #f4faf6; }
+  .categories-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; max-width: 1100px; margin: 0 auto; }
+  .cat-card { background: white; border-radius: 16px; padding: 28px 24px; text-align: center; border: 1px solid #e0ede5; cursor: pointer; transition: all 0.25s; }
+  .cat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(26,107,60,0.1); border-color: var(--green); }
+  .cat-icon { font-size: 2.5rem; margin-bottom: 14px; }
+  .cat-name { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.1rem; color: var(--dark); margin-bottom: 8px; }
+  .cat-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.5; }
+  .modal-overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(15,31,23,0.7); backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: 24px; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: white; border-radius: 20px; max-width: 640px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 36px; position: relative; animation: slideUp 0.3s ease; }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  .modal-close { position: absolute; top: 20px; right: 20px; background: #f0f7f3; border: none; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; font-size: 1.1rem; color: var(--text); display: flex; align-items: center; justify-content: center; }
+  .modal-flag { font-size: 3rem; margin-bottom: 12px; }
+  .modal-title { font-family: 'Fraunces', serif; font-size: 1.8rem; font-weight: 900; color: var(--dark); margin-bottom: 6px; }
+  .modal-subtitle { color: var(--muted); font-size: 0.9rem; margin-bottom: 24px; }
+  .resource-section { margin-bottom: 24px; }
+  .resource-section h3 { font-size: 0.8rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #e8f0eb; }
+  .resource-item { display: flex; align-items: flex-start; gap: 14px; padding: 14px; border-radius: 12px; background: #f8fcf9; margin-bottom: 8px; border: 1px solid #e8f0eb; }
+  .resource-emoji { font-size: 1.4rem; flex-shrink: 0; }
+  .resource-info h4 { font-weight: 500; font-size: 0.95rem; color: var(--dark); margin-bottom: 3px; }
+  .resource-info p { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+  .resource-link { display: inline-block; margin-top: 6px; font-size: 0.8rem; color: var(--green); text-decoration: none; font-weight: 500; }
+  .resource-link:hover { text-decoration: underline; }
+  #how { background: var(--dark); }
+  #how .section-title { color: white; }
+  #how .section-sub { color: rgba(255,255,255,0.5); }
+  .steps { display: flex; flex-direction: column; gap: 0; max-width: 700px; margin: 0 auto; }
+  .step { display: flex; gap: 24px; align-items: flex-start; padding: 28px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .step:last-child { border-bottom: none; }
+  .step-num { font-family: 'Fraunces', serif; font-size: 2.5rem; font-weight: 900; color: var(--gold); line-height: 1; flex-shrink: 0; width: 48px; }
+  .step-content h3 { color: white; font-size: 1.1rem; font-weight: 500; margin-bottom: 6px; }
+  .step-content p { color: rgba(255,255,255,0.5); font-size: 0.9rem; line-height: 1.6; }
+  footer { background: var(--dark); border-top: 1px solid rgba(255,255,255,0.07); padding: 40px 24px; text-align: center; }
+  .footer-logo { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 900; color: white; margin-bottom: 12px; }
+  .footer-logo span { color: var(--gold); }
+  footer p { color: rgba(255,255,255,0.35); font-size: 0.85rem; line-height: 1.7; }
+  .search-results { display: none; max-width: 1200px; margin: 0 auto 40px; background: white; border-radius: 16px; border: 1px solid #e0ede5; overflow: hidden; }
+  .search-results.visible { display: block; }
+  .search-results-header { padding: 16px 24px; background: var(--green-pale); border-bottom: 1px solid #d4e8db; font-size: 0.9rem; color: var(--green); font-weight: 500; }
+  .search-result-item { padding: 16px 24px; border-bottom: 1px solid #f0f7f3; cursor: pointer; transition: background 0.15s; display: flex; align-items: center; gap: 16px; }
+  .search-result-item:hover { background: #f8fcf9; }
+  .search-result-item:last-child { border-bottom: none; }
+  @media (max-width: 600px) { nav { padding: 14px 20px; } .nav-links { display: none; } .hero { padding: 90px 16px 50px; } section { padding: 60px 16px; } .modal { padding: 24px; } }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">Helping<span>World</span>Wide</div>
+  <ul class="nav-links">
+    <li><a href="#countries">Countries</a></li>
+    <li><a href="#categories">Categories</a></li>
+    <li><a href="#how">How It Works</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-globe">🌍</div>
+  <h1>Free Help For<br><span>Every Person</span><br>On Earth</h1>
+  <p>Find free government programs, NGOs, and aid organizations in your country — for food, medicine, education, and money. Completely free. No login needed.</p>
+  <div class="hero-search">
+    <input type="text" id="searchInput" placeholder="Search your country or topic..." />
+    <button onclick="doSearch()">Search</button>
+  </div>
+  <div class="hero-tags">
+    <span class="hero-tag" onclick="filterTag('Food')">🍚 Food</span>
+    <span class="hero-tag" onclick="filterTag('Medicine')">💊 Medicine</span>
+    <span class="hero-tag" onclick="filterTag('Education')">📚 Education</span>
+    <span class="hero-tag" onclick="filterTag('Money')">💰 Money</span>
+    <span class="hero-tag" onclick="filterTag('Jobs')">💼 Jobs</span>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat-item"><div class="stat-num">50+</div><div class="stat-label">Countries Covered</div></div>
+  <div class="stat-item"><div class="stat-num">300+</div><div class="stat-label">Free Resources Listed</div></div>
+  <div class="stat-item"><div class="stat-num">6</div><div class="stat-label">Help Categories</div></div>
+  <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Free Forever</div></div>
+</div>
+
+<section id="countries">
+  <div class="section-header">
+    <div class="section-title">Find Help In Your <span>Country</span></div>
+    <div class="section-sub">Click your country to see all free programs available to you right now</div>
+  </div>
+  <div class="region-tabs">
+    <div class="region-tab active" onclick="filterRegion('all',this)">🌍 All</div>
+    <div class="region-tab" onclick="filterRegion('south-asia',this)">🇵🇰 South Asia</div>
+    <div class="region-tab" onclick="filterRegion('southeast-asia',this)">🌏 SE Asia</div>
+    <div class="region-tab" onclick="filterRegion('middle-east',this)">🕌 Middle East</div>
+    <div class="region-tab" onclick="filterRegion('africa',this)">🌍 Africa</div>
+    <div class="region-tab" onclick="filterRegion('latin-america',this)">🌎 Latin America</div>
+    <div class="region-tab" onclick="filterRegion('europe',this)">🇪🇺 Europe</div>
+    <div class="region-tab" onclick="filterRegion('central-asia',this)">🏔️ Central Asia</div>
+  </div>
+  <div class="search-results" id="searchResults">
+    <div class="search-results-header" id="searchResultsHeader"></div>
+    <div id="searchResultsList"></div>
+  </div>
+  <div class="countries-grid" id="countriesGrid"></div>
+</section>
+
+<section id="categories">
+  <div class="section-header">
+    <div class="section-title">What Do You <span>Need?</span></div>
+    <div class="section-sub">Choose a category to find free help in any country</div>
+  </div>
+  <div class="categories-grid">
+    <div class="cat-card" onclick="filterTag('Food')"><div class="cat-icon">🍚</div><div class="cat-name">Food & Nutrition</div><div class="cat-desc">Free food programs, ration schemes, and nutrition support for families</div></div>
+    <div class="cat-card" onclick="filterTag('Medicine')"><div class="cat-icon">💊</div><div class="cat-name">Free Medicine</div><div class="cat-desc">Government hospitals, free medication schemes, and health camps</div></div>
+    <div class="cat-card" onclick="filterTag('Education')"><div class="cat-icon">📚</div><div class="cat-name">Education</div><div class="cat-desc">Free schools, scholarships, skills training and online courses</div></div>
+    <div class="cat-card" onclick="filterTag('Money')"><div class="cat-icon">💰</div><div class="cat-name">Financial Aid</div><div class="cat-desc">Cash transfers, poverty programs, and emergency financial support</div></div>
+    <div class="cat-card" onclick="filterTag('Jobs')"><div class="cat-icon">💼</div><div class="cat-name">Jobs & Skills</div><div class="cat-desc">Free job training, employment programs, and work opportunities</div></div>
+    <div class="cat-card" onclick="filterTag('Housing')"><div class="cat-icon">🏠</div><div class="cat-name">Housing</div><div class="cat-desc">Affordable housing schemes and shelter programs for low-income families</div></div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="section-header">
+    <div class="section-title">How It <span style="color:var(--gold)">Works</span></div>
+    <div class="section-sub" style="color:rgba(255,255,255,0.5)">Simple. Fast. Completely free.</div>
+  </div>
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-content"><h3>Find Your Country</h3><p>Scroll down and click on your country. We cover South Asia, Middle East, Africa, Latin America, Europe and more.</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-content"><h3>Choose What You Need</h3><p>Food, medicine, education, money, jobs, housing — pick the category that matches your problem.</p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-content"><h3>Get Real Free Help</h3><p>We show you real government programs and NGOs with contact details. No fake promises. No paid services.</p></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-content"><h3>Share With Others</h3><p>Know someone who needs help? Share this website. It's free for everyone, forever.</p></div></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Helping<span>World</span>Wide</div>
+  <p>Free information for people who need it most.<br>All resources listed are official government or NGO programs.<br>This website does not charge any fees and never will.<br><br><small>Created &amp; owned by <strong style="color:var(--gold)">Ejaz Khan</strong> &nbsp;|&nbsp; Built with ❤️ for the world's people &nbsp;|&nbsp; Information is public &amp; free to share</small></p>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+const countries = [
+  // SOUTH ASIA
+  { id:'pakistan', flag:'🇵🇰', name:'Pakistan', region:'south-asia', desc:'Government & NGO programs for food, health, education and financial support', tags:['Food','Medicine','Education','Money','Jobs'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'Utility Stores Corporation',desc:'Subsidized food items at lower prices for low-income families across Pakistan',link:'https://www.usc.org.pk'},{emoji:'🌾',name:'Ehsaas Rashan Program',desc:'Government subsidized ration — flour, ghee, pulses for deserving families',link:'https://ehsaas.nadra.gov.pk'}], 'Free Medicine':[{emoji:'🏥',name:'Pakistan Bait-ul-Mal',desc:'Free treatment for poor patients at government hospitals nationwide',link:'https://www.pbm.gov.pk'},{emoji:'💊',name:'Sehat Sahulat Program',desc:'Free health insurance card — up to Rs 1 million treatment per family per year',link:'https://sehatsahulat.com.pk'}], 'Education':[{emoji:'📚',name:'NAVTTC Free Skills Training',desc:'Free technical and vocational training for youth in hundreds of trades',link:'https://www.navttc.org'},{emoji:'🎓',name:'HEC Need-Based Scholarships',desc:'Full university scholarships for deserving students',link:'https://hec.gov.pk'}], 'Financial Aid':[{emoji:'💰',name:'Ehsaas Kafaalat',desc:'Monthly Rs 2000 cash transfer to women of low-income households',link:'https://bisp.gov.pk'},{emoji:'🏦',name:'Kamyab Jawan Program',desc:'Interest-free loans for young people to start small businesses',link:'https://kamyabjawan.gov.pk'}] }},
+  { id:'india', flag:'🇮🇳', name:'India', region:'south-asia', desc:'Largest free welfare system in the world — food, health, education and more', tags:['Food','Medicine','Education','Money','Housing'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'PM Garib Kalyan Anna Yojana',desc:'Free 5kg rice or wheat per person per month for 800+ million poor people',link:'https://www.india.gov.in'},{emoji:'🌾',name:'Antyodaya Anna Yojana',desc:'Subsidized food grain at Rs 2/kg for poorest families',link:'https://dfpd.gov.in'}], 'Free Medicine':[{emoji:'💊',name:'Jan Aushadhi Scheme',desc:'Quality generic medicines at 50-90% lower prices at 9000+ stores',link:'https://janaushadhi.gov.in'},{emoji:'🏥',name:'Ayushman Bharat PM-JAY',desc:'Free health insurance of Rs 5 lakh per year for 10 crore poor families',link:'https://pmjay.gov.in'}], 'Education':[{emoji:'📚',name:'PM eVIDYA Free Learning',desc:'Free online education platform in multiple languages',link:'https://diksha.gov.in'},{emoji:'🎓',name:'National Scholarship Portal',desc:'All central government scholarships in one place',link:'https://scholarships.gov.in'}], 'Financial Aid':[{emoji:'💰',name:'PM Jan Dhan Yojana',desc:'Free bank account with Rs 10,000 overdraft for poor households',link:'https://pmjdy.gov.in'},{emoji:'🏘️',name:'PM Awas Yojana',desc:'Free or subsidized housing for homeless and poor families',link:'https://pmaymis.gov.in'}] }},
+  { id:'bangladesh', flag:'🇧🇩', name:'Bangladesh', region:'south-asia', desc:'Social safety net programs helping millions of poor families', tags:['Food','Medicine','Education','Money'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'Open Market Sales (OMS)',desc:'Government sells rice and flour at subsidized prices',link:'https://www.mofood.gov.bd'},{emoji:'🌾',name:'VGD Program',desc:'Food support for ultra-poor women',link:'https://www.dw.gov.bd'}], 'Free Medicine':[{emoji:'🏥',name:'Community Clinics',desc:'13,000+ free community health clinics providing free medicine in rural areas',link:'https://cc.mohfw.gov.bd'}], 'Education':[{emoji:'📚',name:'Free Primary Education',desc:'Free education with free textbooks up to class 5',link:'https://www.dpe.gov.bd'},{emoji:'🎓',name:'Primary Stipend Program',desc:'Monthly stipend for poor students to prevent dropout',link:'https://www.mopme.gov.bd'}], 'Financial Aid':[{emoji:'💰',name:'Old Age Allowance',desc:'Monthly Tk 500 cash for elderly poor people',link:'https://www.dss.gov.bd'}] }},
+  { id:'nepal', flag:'🇳🇵', name:'Nepal', region:'south-asia', desc:'Himalayan nation with social protection for its poorest citizens', tags:['Food','Medicine','Money','Education'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'Food for Work Program',desc:'Food or cash for poor families in exchange for community work',link:'https://www.wfp.org/countries/nepal'}], 'Free Medicine':[{emoji:'🏥',name:'Free Healthcare Policy',desc:'Free basic health services at all government health posts',link:'https://www.mohp.gov.np'}], 'Education':[{emoji:'📚',name:'Free Basic Education',desc:'Free and compulsory education for all children Grade 1 to 8',link:'https://www.moe.gov.np'}], 'Financial Aid':[{emoji:'💰',name:'Social Security Allowance',desc:'Monthly cash for senior citizens, disabled people, single women',link:'https://www.moless.gov.np'}] }},
+  { id:'srilanka', flag:'🇱🇰', name:'Sri Lanka', region:'south-asia', desc:'Island nation with strong public services for low-income citizens', tags:['Food','Medicine','Education','Money'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'Samurdhi Food Stamps',desc:'Monthly food stamps for low-income families to buy essential food',link:'https://www.samurdhi.gov.lk'}], 'Free Medicine':[{emoji:'🏥',name:'Free Government Hospitals',desc:'All government hospitals provide completely free healthcare to all citizens',link:'https://www.health.gov.lk'}], 'Education':[{emoji:'📚',name:'Free Education Policy',desc:'Free education from Grade 1 to university for all Sri Lankan students',link:'https://www.moe.gov.lk'}], 'Financial Aid':[{emoji:'💰',name:'Aswesuma Welfare Program',desc:'Monthly cash assistance to the poorest households in Sri Lanka',link:'https://www.samurdhi.gov.lk'}] }},
+
+  // SOUTHEAST ASIA
+  { id:'indonesia', flag:'🇮🇩', name:'Indonesia', region:'southeast-asia', desc:'World largest archipelago with strong social safety programs', tags:['Food','Medicine','Money','Education'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'BPNT Food Assistance',desc:'Monthly Rp 200,000 non-cash food voucher for staples',link:'https://www.kemensos.go.id'}], 'Free Medicine':[{emoji:'💊',name:'JKN-KIS Health Card',desc:'Free national health insurance (BPJS) for poor families',link:'https://www.bpjs-kesehatan.go.id'}], 'Education':[{emoji:'🎓',name:'KIP Smart Indonesia Card',desc:'Free school card covering all education costs for poor students',link:'https://kip.kemdikbud.go.id'}], 'Financial Aid':[{emoji:'💰',name:'PKH Family Hope Program',desc:'Conditional cash transfer for poor families',link:'https://www.kemensos.go.id'}] }},
+  { id:'philippines', flag:'🇵🇭', name:'Philippines', region:'southeast-asia', desc:'Social protection programs for Filipino families in need', tags:['Food','Medicine','Money','Education'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'NFA Rice Subsidy',desc:'Subsidized rice at lower prices to poor communities',link:'https://www.nfa.gov.ph'}], 'Free Medicine':[{emoji:'💊',name:'PhilHealth Free Coverage',desc:'Free national health insurance for all Filipinos',link:'https://www.philhealth.gov.ph'},{emoji:'🏥',name:'Malasakit Centers',desc:'One-stop shop for poor patients to get free medicine',link:'https://www.doh.gov.ph'}], 'Education':[{emoji:'🎓',name:'UniFAST Free Tuition',desc:'Free tuition at all state universities for qualified students',link:'https://unifast.gov.ph'}], 'Financial Aid':[{emoji:'💰',name:'4Ps Pantawid Program',desc:'Monthly cash grants to poor families',link:'https://dswd.gov.ph/4ps'}] }},
+  { id:'myanmar', flag:'🇲🇲', name:'Myanmar', region:'southeast-asia', desc:'NGO and UN programs supporting people in need', tags:['Food','Medicine','Education'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'WFP Myanmar',desc:'Food assistance reaching over 1 million vulnerable people',link:'https://www.wfp.org/countries/myanmar'}], 'Free Medicine':[{emoji:'🏥',name:'MSF Free Healthcare',desc:'Free medical care in conflict-affected areas',link:'https://www.msf.org/myanmar'}], 'Education':[{emoji:'📚',name:'UNICEF Education Myanmar',desc:'Free learning materials for children in vulnerable situations',link:'https://www.unicef.org/myanmar'}] }},
+  { id:'vietnam', flag:'🇻🇳', name:'Vietnam', region:'southeast-asia', desc:'Socialist state with strong free public services for all', tags:['Food','Medicine','Education','Money'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'National Targeted Programs',desc:'Food and nutrition support for poor households in rural areas',link:'https://www.molisa.gov.vn'}], 'Free Medicine':[{emoji:'💊',name:'Health Insurance for Poor',desc:'Free health insurance cards for all poor and near-poor households',link:'https://www.bhxhvn.vn'}], 'Education':[{emoji:'📚',name:'Free Primary Education',desc:'Free compulsory education for all Vietnamese children',link:'https://www.moet.gov.vn'}], 'Financial Aid':[{emoji:'💰',name:'Social Protection Program',desc:'Monthly cash allowances for elderly, disabled and poor families',link:'https://www.molisa.gov.vn'}] }},
+  { id:'cambodia', flag:'🇰🇭', name:'Cambodia', region:'southeast-asia', desc:'NGO and government programs helping poor Cambodian families', tags:['Food','Medicine','Education','Money'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'WFP Cambodia',desc:'School meals and food assistance for vulnerable families',link:'https://www.wfp.org/countries/cambodia'}], 'Free Medicine':[{emoji:'🏥',name:'Health Equity Funds',desc:'Free healthcare for the poorest people at government health centers',link:'https://www.moh.gov.kh'}], 'Education':[{emoji:'📚',name:'UNICEF Cambodia Education',desc:'Free education support and scholarships for poor children',link:'https://www.unicef.org/cambodia'}], 'Financial Aid':[{emoji:'💰',name:'ID Poor Cash Transfer',desc:'Monthly cash for families registered as poor in Cambodia',link:'https://www.mop.gov.kh'}] }},
+
+  // MIDDLE EAST & NORTH AFRICA
+  { id:'egypt', flag:'🇪🇬', name:'Egypt', region:'middle-east', desc:'Arab world largest social protection programs for poor families', tags:['Food','Medicine','Money','Education'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍞',name:'Bread Subsidy (Tamween)',desc:'Subsidized bread, cooking oil and sugar cards for poor families',link:'https://www.msit.gov.eg'},{emoji:'🌾',name:'Food Smart Cards',desc:'Monthly food allowance to buy subsidized food items',link:'https://www.msit.gov.eg'}], 'Free Medicine':[{emoji:'🏥',name:'Universal Health Insurance',desc:'Free or subsidized healthcare to all citizens',link:'https://www.mohp.gov.eg'}], 'Education':[{emoji:'📚',name:'Free Public Education',desc:'Free education from primary through secondary school',link:'https://www.moe.gov.eg'}], 'Financial Aid':[{emoji:'💰',name:'Takaful and Karama',desc:'Monthly cash to poor families and elderly poor',link:'https://www.moss.gov.eg'}] }},
+  { id:'morocco', flag:'🇲🇦', name:'Morocco', region:'middle-east', desc:'North African nation with growing social protection programs', tags:['Food','Medicine','Education','Money'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍞',name:'RAMED Food Support',desc:'Food assistance for poor and vulnerable households across Morocco',link:'https://www.ramed.ma'}], 'Free Medicine':[{emoji:'🏥',name:'RAMED Health Card',desc:'Free healthcare at public hospitals for poor people — 8 million beneficiaries',link:'https://www.ramed.ma'}], 'Education':[{emoji:'📚',name:'Free Public Schools',desc:'Free education for all Moroccan children at government schools',link:'https://www.men.gov.ma'},{emoji:'🎓',name:'Tayssir Scholarship',desc:'Monthly cash to poor families to keep children in school',link:'https://www.men.gov.ma'}], 'Financial Aid':[{emoji:'💰',name:'Social Cohesion Support Fund',desc:'Cash transfers and support for the most vulnerable Moroccan families',link:'https://www.social.gov.ma'}] }},
+  { id:'jordan', flag:'🇯🇴', name:'Jordan', region:'middle-east', desc:'Small kingdom with strong social safety net for vulnerable families', tags:['Food','Medicine','Education','Money'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'National Aid Fund Food Vouchers',desc:'Monthly food vouchers for poor Jordanian families',link:'https://www.naf.gov.jo'}], 'Free Medicine':[{emoji:'🏥',name:'Government Hospital Free Care',desc:'Free healthcare for poor and uninsured Jordanians at public hospitals',link:'https://www.moh.gov.jo'}], 'Education':[{emoji:'📚',name:'Free Public Education',desc:'Free compulsory education for all Jordanian children',link:'https://www.moe.gov.jo'}], 'Financial Aid':[{emoji:'💰',name:'National Aid Fund Cash',desc:'Monthly cash assistance to poor households registered with NAF',link:'https://www.naf.gov.jo'}] }},
+
+  // AFRICA
+  { id:'nigeria', flag:'🇳🇬', name:'Nigeria', region:'africa', desc:'Federal and state programs helping low-income Nigerians', tags:['Food','Money','Education','Jobs'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'Home Grown School Feeding',desc:'Free daily meals for primary school children in public schools',link:'https://www.nspsp.ng'}], 'Financial Aid':[{emoji:'💰',name:'Conditional Cash Transfer',desc:'Monthly N5,000 cash to extremely poor households',link:'https://www.nspsp.ng'},{emoji:'🏦',name:'TraderMoni Loans',desc:'Interest-free micro-loans for petty traders and market women',link:'https://www.npsp.gov.ng'}], 'Education':[{emoji:'📚',name:'Universal Basic Education',desc:'Free and compulsory education for 9 years',link:'https://www.ubec.gov.ng'},{emoji:'🎓',name:'N-Power Skills Program',desc:'Free job skills training and monthly stipend for youth',link:'https://npower.gov.ng'}] }},
+  { id:'kenya', flag:'🇰🇪', name:'Kenya', region:'africa', desc:'East Africa social programs for vulnerable Kenyans', tags:['Food','Medicine','Money','Education'],
+    resources:{ 'Food & Nutrition':[{emoji:'🌾',name:'WFP Food Assistance Kenya',desc:'Food support to refugees and poor communities',link:'https://www.wfp.org/countries/kenya'}], 'Free Medicine':[{emoji:'🏥',name:'NHIF Free Cover',desc:'Subsidized health cover at public hospitals',link:'https://www.nhif.or.ke'},{emoji:'💊',name:'Free Maternity Services',desc:'Free delivery and maternity care at all public facilities',link:'https://www.health.go.ke'}], 'Education':[{emoji:'📚',name:'Free Primary Education',desc:'Government pays all fees for public primary school',link:'https://www.education.go.ke'}], 'Financial Aid':[{emoji:'💰',name:'CT-OVC Cash Transfer',desc:'Monthly KSh 2,000 cash to poor households caring for orphans',link:'https://www.socialprotection.go.ke'}] }},
+  { id:'ethiopia', flag:'🇪🇹', name:'Ethiopia', region:'africa', desc:'Africa second largest country with major food and aid programs', tags:['Food','Medicine','Education','Money'],
+    resources:{ 'Food & Nutrition':[{emoji:'🌾',name:'PSNP Safety Net Program',desc:'Food or cash support for 8 million+ food insecure rural Ethiopians',link:'https://www.fao.org/ethiopia'},{emoji:'🍚',name:'WFP Ethiopia',desc:'Food assistance for drought-affected families and refugees',link:'https://www.wfp.org/countries/ethiopia'}], 'Free Medicine':[{emoji:'🏥',name:'Health Extension Program',desc:'40,000+ Health Extension Workers deliver free basic healthcare to villages',link:'https://www.moh.gov.et'}], 'Education':[{emoji:'📚',name:'Free Primary Education',desc:'Free government school education for all Ethiopian children',link:'https://www.moe.gov.et'}], 'Financial Aid':[{emoji:'💰',name:'UNICEF Child Support',desc:'UNICEF programs supporting the most vulnerable children',link:'https://www.unicef.org/ethiopia'}] }},
+  { id:'ghana', flag:'🇬🇭', name:'Ghana', region:'africa', desc:'West Africa stable economy with strong social programs', tags:['Food','Medicine','Education','Money'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'School Feeding Program',desc:'Free daily hot meals for 2 million+ primary school children',link:'https://www.gsfp.com.gh'}], 'Free Medicine':[{emoji:'💊',name:'NHIA Free Health Cover',desc:'Free or subsidized healthcare at clinics',link:'https://www.nhis.gov.gh'},{emoji:'🏥',name:'Free Maternal Healthcare',desc:'Free antenatal, delivery and postnatal care at public facilities',link:'https://www.moh.gov.gh'}], 'Education':[{emoji:'🎓',name:'Free SHS Program',desc:'Government pays all senior high school fees',link:'https://www.moe.gov.gh'}], 'Financial Aid':[{emoji:'💰',name:'LEAP Cash Transfer',desc:'Bi-monthly cash grants for extremely poor households',link:'https://www.dswgov.gh'}] }},
+  { id:'tanzania', flag:'🇹🇿', name:'Tanzania', region:'africa', desc:'East African nation with community-based social support programs', tags:['Food','Medicine','Education','Money'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'WFP Tanzania',desc:'Food assistance for food-insecure households and refugees',link:'https://www.wfp.org/countries/tanzania'}], 'Free Medicine':[{emoji:'🏥',name:'Free Primary Healthcare',desc:'Free basic healthcare services at government health centers',link:'https://www.moh.go.tz'}], 'Education':[{emoji:'📚',name:'Free Basic Education',desc:'Free primary and secondary education at government schools',link:'https://www.moe.go.tz'}], 'Financial Aid':[{emoji:'💰',name:'Tanzania Social Action Fund',desc:'Cash transfers and livelihood support for the poorest households',link:'https://www.tasaf.go.tz'}] }},
+  { id:'uganda', flag:'🇺🇬', name:'Uganda', region:'africa', desc:'East African programs for poverty reduction and basic needs', tags:['Food','Medicine','Education','Money'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'WFP Uganda',desc:'Food assistance for 1.5 million+ refugees and poor Ugandans',link:'https://www.wfp.org/countries/uganda'}], 'Free Medicine':[{emoji:'🏥',name:'Free Primary Healthcare',desc:'Free essential health services at all government health units',link:'https://www.health.go.ug'}], 'Education':[{emoji:'📚',name:'Universal Primary Education',desc:'Free government primary school for all Ugandan children',link:'https://www.education.go.ug'}], 'Financial Aid':[{emoji:'💰',name:'Social Assistance Grants',desc:'Monthly cash grants for elderly and disabled poor Ugandans',link:'https://www.mglsd.go.ug'}] }},
+  { id:'southafrica', flag:'🇿🇦', name:'South Africa', region:'africa', desc:'Africa most developed welfare system with wide social grants', tags:['Food','Medicine','Education','Money'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'National School Nutrition',desc:'Free daily meals for all learners in poor public schools',link:'https://www.education.gov.za'}], 'Free Medicine':[{emoji:'🏥',name:'Free Public Healthcare',desc:'Free healthcare at all public clinics and hospitals for the poor',link:'https://www.health.gov.za'}], 'Education':[{emoji:'📚',name:'No-Fee Schools',desc:'Government designated schools where no fees are charged',link:'https://www.education.gov.za'},{emoji:'🎓',name:'NSFAS Student Loans',desc:'Free funding for poor students at universities and colleges',link:'https://www.nsfas.org.za'}], 'Financial Aid':[{emoji:'💰',name:'SASSA Social Grants',desc:'Monthly grants for children, elderly, disabled and unemployed — 18 million+ receive',link:'https://www.sassa.gov.za'}] }},
+  { id:'senegal', flag:'🇸🇳', name:'Senegal', region:'africa', desc:'West African nation with growing social protection programs', tags:['Food','Medicine','Education','Money'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'WFP Senegal',desc:'Food and nutrition assistance for the most vulnerable Senegalese',link:'https://www.wfp.org/countries/senegal'}], 'Free Medicine':[{emoji:'🏥',name:'CMU Universal Health Coverage',desc:'Free or subsidized healthcare for poor Senegalese families',link:'https://www.sante.gouv.sn'}], 'Education':[{emoji:'📚',name:'Free Public Education',desc:'Free primary education for all Senegalese children',link:'https://www.education.gouv.sn'}], 'Financial Aid':[{emoji:'💰',name:'National Social Safety Net',desc:'Cash transfers to the poorest households across Senegal',link:'https://www.gouvernement.sn'}] }},
+
+  // LATIN AMERICA
+  { id:'brazil', flag:'🇧🇷', name:'Brazil', region:'latin-america', desc:'Latin America largest social protection system helping millions', tags:['Food','Medicine','Education','Money'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'Bolsa Família Food Support',desc:'Food and nutrition component of Brazil famous poverty program',link:'https://www.gov.br/cidadania'},{emoji:'🌾',name:'Popular Restaurant Program',desc:'Full meals for R$1 at government restaurants for poor people',link:'https://www.gov.br'}], 'Free Medicine':[{emoji:'💊',name:'SUS Free Healthcare',desc:'Brazil free universal health system covering all citizens from birth',link:'https://www.saude.gov.br'},{emoji:'🏥',name:'Farmácia Popular',desc:'Free or very cheap medicines at thousands of pharmacies nationwide',link:'https://www.gov.br/saude'}], 'Education':[{emoji:'📚',name:'PROUNI University Scholarship',desc:'Full and partial free university scholarships for poor students',link:'https://prouniportal.mec.gov.br'},{emoji:'🎓',name:'FIES Student Financing',desc:'Government-funded student loans for low-income higher education',link:'https://fies.mec.gov.br'}], 'Financial Aid':[{emoji:'💰',name:'Bolsa Família Cash Transfer',desc:'Monthly cash for 21 million poor Brazilian families',link:'https://www.gov.br/cidadania'}] }},
+  { id:'mexico', flag:'🇲🇽', name:'Mexico', region:'latin-america', desc:'Strong federal programs helping poor Mexican families', tags:['Food','Medicine','Education','Money'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'Sembrando Vida Food Program',desc:'Agricultural and food support for rural poor communities',link:'https://www.gob.mx/bienestar'},{emoji:'🌾',name:'DIF Food Assistance',desc:'Free breakfast and food packages for poor children and families',link:'https://www.dif.gob.mx'}], 'Free Medicine':[{emoji:'🏥',name:'IMSS Free Healthcare',desc:'Free healthcare for workers and their families through social security',link:'https://www.imss.gob.mx'},{emoji:'💊',name:'INSABI Free Medicines',desc:'Free medicines and healthcare for people without social security',link:'https://www.gob.mx/salud'}], 'Education':[{emoji:'🎓',name:'Benito Juárez Scholarship',desc:'Monthly stipend for poor students at all education levels',link:'https://www.gob.mx/becasbenitojuarez'}], 'Financial Aid':[{emoji:'💰',name:'Sembrando Vida Cash',desc:'Monthly $5,000 pesos for poor rural farmers and families',link:'https://www.gob.mx/bienestar'}] }},
+  { id:'colombia', flag:'🇨🇴', name:'Colombia', region:'latin-america', desc:'Growing social programs for Colombia most vulnerable citizens', tags:['Food','Medicine','Education','Money'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'ICBF Food Programs',desc:'Free food and nutrition for children and vulnerable families',link:'https://www.icbf.gov.co'}], 'Free Medicine':[{emoji:'🏥',name:'SISBEN Free Healthcare',desc:'Free or subsidized healthcare for poor Colombians',link:'https://www.sisben.gov.co'}], 'Education':[{emoji:'📚',name:'Free Public Education',desc:'Free education at government schools for all Colombian children',link:'https://www.mineducacion.gov.co'},{emoji:'🎓',name:'Ser Pilo Paga Scholarship',desc:'Full university scholarships for poor high-achieving students',link:'https://www.mineducacion.gov.co'}], 'Financial Aid':[{emoji:'💰',name:'Familias en Acción',desc:'Monthly cash grants for poor families with children',link:'https://www.dps.gov.co'}] }},
+  { id:'peru', flag:'🇵🇪', name:'Peru', region:'latin-america', desc:'Andean nation with social programs for its poorest communities', tags:['Food','Medicine','Education','Money'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'Qali Warma School Meals',desc:'Free daily meals for 4 million+ children in public schools',link:'https://www.qaliwarma.gob.pe'},{emoji:'🌾',name:'PRONAA Food Assistance',desc:'Food baskets and nutrition support for poor Peruvian families',link:'https://www.midis.gob.pe'}], 'Free Medicine':[{emoji:'🏥',name:'SIS Free Health Insurance',desc:'Free health insurance for poor people at government hospitals',link:'https://www.sis.gob.pe'}], 'Education':[{emoji:'📚',name:'Free Public Education',desc:'Free education at all government schools',link:'https://www.gob.pe/minedu'}], 'Financial Aid':[{emoji:'💰',name:'Juntos Cash Transfer',desc:'Monthly S/200 cash for extremely poor families with children',link:'https://www.juntos.gob.pe'}] }},
+  { id:'argentina', flag:'🇦🇷', name:'Argentina', region:'latin-america', desc:'South American welfare programs for poor Argentine families', tags:['Food','Medicine','Education','Money'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'Plan Nacional Argentina',desc:'Food card (Tarjeta Alimentar) for poor families with children',link:'https://www.argentina.gob.ar/desarrollosocial'}], 'Free Medicine':[{emoji:'🏥',name:'PAMI Free Healthcare',desc:'Free healthcare and medicines for retired and elderly poor Argentines',link:'https://www.pami.org.ar'},{emoji:'💊',name:'Remediar Free Medicines',desc:'Free essential medicines delivered to 6,000+ health centers',link:'https://www.argentina.gob.ar/salud'}], 'Education':[{emoji:'📚',name:'Free Public University',desc:'All public universities in Argentina are 100% free for everyone',link:'https://www.argentina.gob.ar/educacion'},{emoji:'🎓',name:'Becas Progresar Scholarship',desc:'Monthly stipend for poor students to continue their studies',link:'https://www.argentina.gob.ar/educacion/progresar'}], 'Financial Aid':[{emoji:'💰',name:'AUH Universal Child Allowance',desc:'Monthly cash per child for unemployed and poor parents',link:'https://www.anses.gob.ar'}] }},
+
+  // EUROPE (low-income countries)
+  { id:'ukraine', flag:'🇺🇦', name:'Ukraine', region:'europe', desc:'Government and international aid programs for Ukrainian citizens', tags:['Food','Medicine','Education','Money'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'WFP Ukraine Emergency',desc:'Food assistance for conflict-affected and displaced Ukrainians',link:'https://www.wfp.org/countries/ukraine'}], 'Free Medicine':[{emoji:'🏥',name:'Free Government Healthcare',desc:'Free basic healthcare at government hospitals and clinics',link:'https://moz.gov.ua'}], 'Education':[{emoji:'📚',name:'Free Public Education',desc:'Free education for all Ukrainian children at state schools',link:'https://mon.gov.ua'}], 'Financial Aid':[{emoji:'💰',name:'Social Protection Payments',desc:'Monthly payments for displaced people, families and vulnerable groups',link:'https://www.msp.gov.ua'}] }},
+  { id:'moldova', flag:'🇲🇩', name:'Moldova', region:'europe', desc:'Eastern Europe poorest country with social support programs', tags:['Food','Medicine','Education','Money'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'WFP Moldova',desc:'Food assistance for the most vulnerable Moldovan families',link:'https://www.wfp.org/countries/moldova'}], 'Free Medicine':[{emoji:'🏥',name:'CNAM Free Healthcare',desc:'Free healthcare for poor and vulnerable people at public facilities',link:'https://cnam.md'}], 'Education':[{emoji:'📚',name:'Free Public Education',desc:'Free education from kindergarten to university at state institutions',link:'https://mecc.gov.md'}], 'Financial Aid':[{emoji:'💰',name:'Social Aid Program',desc:'Monthly social aid payments for families below minimum income',link:'https://mmps.gov.md'}] }},
+  { id:'albania', flag:'🇦🇱', name:'Albania', region:'europe', desc:'Balkan nation with social assistance for low-income families', tags:['Food','Medicine','Education','Money'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'Social Assistance Food Support',desc:'Food packages and vouchers for families receiving social assistance',link:'https://www.sherbimisocial.gov.al'}], 'Free Medicine':[{emoji:'🏥',name:'Free Public Healthcare',desc:'Free basic healthcare at government hospitals for poor citizens',link:'https://www.shendetesia.gov.al'}], 'Education':[{emoji:'📚',name:'Free Public Education',desc:'Free education at all state schools and universities in Albania',link:'https://www.arsimi.gov.al'}], 'Financial Aid':[{emoji:'💰',name:'Ndihma Ekonomike',desc:'Monthly economic assistance for the poorest Albanian families',link:'https://www.sherbimisocial.gov.al'}] }},
+
+  // CENTRAL ASIA
+  { id:'afghanistan', flag:'🇦🇫', name:'Afghanistan', region:'central-asia', desc:'International aid programs for Afghan people in crisis', tags:['Food','Medicine','Education','Money'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'WFP Afghanistan',desc:'Emergency food assistance for 15 million+ food insecure Afghans',link:'https://www.wfp.org/countries/afghanistan'},{emoji:'🌾',name:'UNHCR Food Support',desc:'Food and non-food items for displaced Afghan families',link:'https://www.unhcr.org/afghanistan'}], 'Free Medicine':[{emoji:'🏥',name:'MSF Free Healthcare',desc:'Free medical care at MSF hospitals and clinics across Afghanistan',link:'https://www.msf.org/afghanistan'},{emoji:'💊',name:'WHO Afghanistan Health',desc:'WHO-supported free healthcare at government health facilities',link:'https://www.emro.who.int/afg'}], 'Education':[{emoji:'📚',name:'UNICEF Afghanistan Education',desc:'Free learning and education support for Afghan children',link:'https://www.unicef.org/afghanistan'}], 'Financial Aid':[{emoji:'💰',name:'WFP Cash Assistance',desc:'Cash-based assistance for the most vulnerable Afghan households',link:'https://www.wfp.org/countries/afghanistan'}] }},
+  { id:'uzbekistan', flag:'🇺🇿', name:'Uzbekistan', region:'central-asia', desc:'Central Asian nation with social protection for poor families', tags:['Food','Medicine','Education','Money'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'Mahalla Social Support',desc:'Community-based food and support for the poorest families',link:'https://www.mtsz.uz'}], 'Free Medicine':[{emoji:'🏥',name:'Free Government Healthcare',desc:'Free basic healthcare at government hospitals and polyclinics',link:'https://www.minzdrav.uz'}], 'Education':[{emoji:'📚',name:'Free Public Education',desc:'Free compulsory education for all Uzbek children',link:'https://www.edu.uz'}], 'Financial Aid':[{emoji:'💰',name:'Social Allowances',desc:'Monthly allowances for poor families, disabled and elderly people',link:'https://www.mtsz.uz'}] }},
+  { id:'tajikistan', flag:'🇹🇯', name:'Tajikistan', region:'central-asia', desc:'Poorest post-Soviet state with international aid support', tags:['Food','Medicine','Education','Money'],
+    resources:{ 'Food & Nutrition':[{emoji:'🍚',name:'WFP Tajikistan',desc:'Food assistance for food-insecure Tajik families',link:'https://www.wfp.org/countries/tajikistan'}], 'Free Medicine':[{emoji:'🏥',name:'Basic Benefit Package',desc:'Free essential healthcare services at government health facilities',link:'https://www.moh.tj'}], 'Education':[{emoji:'📚',name:'Free Public Education',desc:'Free education for all Tajik children at government schools',link:'https://www.moe.tj'}], 'Financial Aid':[{emoji:'💰',name:'Social Protection Payments',desc:'Monthly social payments for poor, disabled and elderly Tajiks',link:'https://www.mlsp.tj'}] }},
+];
+
+let activeRegion = 'all';
+let activeTag = null;
+
+function renderCountries() {
+  const grid = document.getElementById('countriesGrid');
+  let filtered = countries;
+  if (activeRegion !== 'all') filtered = filtered.filter(c => c.region === activeRegion);
+  if (activeTag) filtered = filtered.filter(c => c.tags.includes(activeTag));
+  grid.innerHTML = filtered.map(c => `
+    <div class="country-card" onclick="openModal('${c.id}')">
+      <div class="country-flag">${c.flag}</div>
+      <div class="country-name">${c.name}</div>
+      <div class="country-desc">${c.desc}</div>
+      <div class="country-tags">${c.tags.map(t=>`<span class="ctag">${t}</span>`).join('')}</div>
+    </div>
+  `).join('') || '<p style="color:var(--muted);text-align:center;padding:40px;grid-column:1/-1">No countries found. More coming soon!</p>';
+}
+
+function filterRegion(region, el) {
+  activeRegion = region; activeTag = null;
+  document.querySelectorAll('.region-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('searchResults').classList.remove('visible');
+  renderCountries();
+}
+
+function filterTag(tag) {
+  activeTag = tag; activeRegion = 'all';
+  document.querySelectorAll('.region-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelector('.region-tab').classList.add('active');
+  document.getElementById('searchResults').classList.remove('visible');
+  renderCountries();
+  document.getElementById('countries').scrollIntoView({behavior:'smooth'});
+}
+
+function doSearch() {
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  if (!q) return;
+  const results = countries.filter(c => c.name.toLowerCase().includes(q) || c.tags.some(t=>t.toLowerCase().includes(q)) || c.desc.toLowerCase().includes(q));
+  const container = document.getElementById('searchResults');
+  document.getElementById('searchResultsHeader').textContent = `Found ${results.length} result(s) for "${q}"`;
+  document.getElementById('searchResultsList').innerHTML = results.map(c=>`
+    <div class="search-result-item" onclick="openModal('${c.id}')">
+      <span style="font-size:1.8rem">${c.flag}</span>
+      <div><strong>${c.name}</strong><div style="font-size:0.83rem;color:var(--muted)">${c.desc}</div></div>
+    </div>
+  `).join('') || '<div style="padding:20px;color:var(--muted)">No results found.</div>';
+  container.classList.add('visible');
+  document.getElementById('countries').scrollIntoView({behavior:'smooth'});
+}
+
+document.getElementById('searchInput').addEventListener('keydown', e=>{ if(e.key==='Enter') doSearch(); });
+
+function openModal(id) {
+  const c = countries.find(x=>x.id===id);
+  if (!c) return;
+  const sections = Object.entries(c.resources).map(([title,items])=>`
+    <div class="resource-section">
+      <h3>${title}</h3>
+      ${items.map(r=>`
+        <div class="resource-item">
+          <div class="resource-emoji">${r.emoji}</div>
+          <div class="resource-info">
+            <h4>${r.name}</h4>
+            <p>${r.desc}</p>
+            <a class="resource-link" href="${r.link}" target="_blank" rel="noopener">Visit Official Website →</a>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+  document.getElementById('modalContent').innerHTML = `
+    <div class="modal-flag">${c.flag}</div>
+    <div class="modal-title">${c.name}</div>
+    <div class="modal-subtitle">Free government & NGO programs available to you</div>
+    ${sections}
+    <p style="font-size:0.8rem;color:var(--muted);margin-top:16px;padding-top:16px;border-top:1px solid #e8f0eb">ℹ️ All programs are official government or NGO initiatives. Click links to visit official websites.</p>
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) { if(e.target===document.getElementById('modalOverlay')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modalOverlay').classList.remove('open'); document.body.style.overflow=''; }
+
+renderCountries();
+</script>
+</body>
+</html>
